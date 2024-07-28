@@ -1,0 +1,964 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 6,
+    "links": [],
+    "panels": [
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "cdrfl269uv5kwa"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "semi-dark-red",
+              "mode": "fixed"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "fillOpacity": 80,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "short"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 22,
+          "x": 0,
+          "y": 0
+        },
+        "id": 9,
+        "options": {
+          "barRadius": 0,
+          "barWidth": 0.97,
+          "fullHighlight": false,
+          "groupWidth": 0.7,
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "right",
+            "showLegend": true
+          },
+          "orientation": "auto",
+          "showValue": "never",
+          "stacking": "none",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "xTickLabelRotation": 0,
+          "xTickLabelSpacing": 0
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "cdrfl269uv5kwa"
+            },
+            "rawSQL": "SELECT\r\n    TO_CHAR(o.date_time, 'HH24:00') AS hour,\r\n    SUM(payment_total/100) AS Revenue\r\nFROM\r\n    orders o\r\nGROUP BY\r\n    hour\r\nORDER BY\r\n    hour;\r\n\r\n\r\n",
+            "refId": "A",
+            "schema": "public",
+            "table": "orders"
+          }
+        ],
+        "title": "Total Revenue per hour",
+        "type": "barchart"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "cdrfl269uv5kwa"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "semi-dark-red",
+              "mode": "fixed"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Revenue (£)",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 3,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "short"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 22,
+          "x": 0,
+          "y": 8
+        },
+        "id": 4,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "cdrfl269uv5kwa"
+            },
+            "rawSQL": "SELECT\r\n    CAST(order_date AS TIMESTAMP) AS time,\r\n    SUM(payment_total) / 100 AS revenue\r\nFROM\r\n    orders\r\nGROUP BY\r\n    time\r\nORDER BY\r\n    time;\r\n\r\n",
+            "refId": "A",
+            "schema": "public",
+            "table": "orders"
+          }
+        ],
+        "title": "Total Revenue",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "cdrfl269uv5kwa"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "semi-dark-red",
+              "mode": "fixed"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 3,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "short"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 22,
+          "x": 0,
+          "y": 16
+        },
+        "id": 10,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "cdrfl269uv5kwa"
+            },
+            "rawSQL": "SELECT (CONVERT(float, AVG(payment_total))/100) AS Revenue, CAST(order_date AS TIMESTAMP) AS time\r\nFROM orders\r\nGROUP BY time",
+            "refId": "A",
+            "schema": "public",
+            "table": "orders"
+          }
+        ],
+        "title": "Average Revenue per order per day",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "cdrfl269uv5kwa"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "semi-dark-red",
+              "mode": "fixed"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Total Revenue (£)",
+              "axisPlacement": "auto",
+              "fillOpacity": 80,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 22,
+          "x": 0,
+          "y": 25
+        },
+        "id": 1,
+        "options": {
+          "barRadius": 0,
+          "barWidth": 0.84,
+          "fullHighlight": false,
+          "groupWidth": 0.7,
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "orientation": "auto",
+          "showValue": "auto",
+          "stacking": "none",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "xField": "branch_location",
+          "xTickLabelRotation": 0,
+          "xTickLabelSpacing": 0
+        },
+        "pluginVersion": "11.1.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "cdrfl269uv5kwa"
+            },
+            "rawSQL": "SELECT SUM(payment_total/100) AS Revenue, branch_location\r\nFROM orders\r\nGROUP BY branch_location\r\nORDER BY Revenue  desc",
+            "refId": "A",
+            "schema": "public",
+            "table": "orders"
+          }
+        ],
+        "title": "Total Revenue At Present Per Branch",
+        "type": "barchart"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "cdrfl269uv5kwa"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Revenue (£)",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 22,
+          "x": 0,
+          "y": 34
+        },
+        "id": 2,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "cdrfl269uv5kwa"
+            },
+            "rawSQL": "SELECT\r\n    CAST(order_date AS TIMESTAMP) AS time,\r\n    SUM(payment_total) / 100 AS Sales,  branch_location\r\nFROM\r\n    orders\r\nGROUP BY\r\n    branch_location, time\r\nORDER BY\r\n    time;",
+            "refId": "A"
+          }
+        ],
+        "title": " Branch Total Revenue over Time",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "cdrfl269uv5kwa"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Product volume sold (units)",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 3,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 22,
+          "x": 0,
+          "y": 43
+        },
+        "id": 5,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "cdrfl269uv5kwa"
+            },
+            "rawSQL": "SELECT COUNT (op.order_products_id) AS products_sold,\r\nCAST(o.order_date AS TIMESTAMP) AS time\r\nFROM order_products op\r\nJOIN orders o ON op.order_id = o.order_id\r\nGROUP by time\r\nORDER BY time;",
+            "refId": "A",
+            "schema": "public",
+            "table": "order_products"
+          }
+        ],
+        "title": "Product Volume Sold ",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "cdrfl269uv5kwa"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Product Volume sold (units)",
+              "axisPlacement": "auto",
+              "fillOpacity": 80,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 22,
+          "x": 0,
+          "y": 51
+        },
+        "id": 3,
+        "options": {
+          "barRadius": 0,
+          "barWidth": 0.97,
+          "fullHighlight": false,
+          "groupWidth": 0.7,
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "orientation": "auto",
+          "showValue": "auto",
+          "stacking": "none",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "xTickLabelRotation": 0,
+          "xTickLabelSpacing": 0
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "cdrfl269uv5kwa"
+            },
+            "rawSQL": "SELECT COUNT (op.order_products_id) AS products, o.branch_location\r\nFrom order_products op\r\nJOIN orders o\r\nON op.order_id = o.order_id\r\nGROUP BY branch_location\r\norder by products desc",
+            "refId": "A",
+            "schema": "public",
+            "table": "order_products"
+          }
+        ],
+        "title": "Products Volume By Branch",
+        "type": "barchart"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "cdrfl269uv5kwa"
+        },
+        "description": "Total product volume over time per product",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Product Volume sold (units)",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 13,
+          "w": 22,
+          "x": 0,
+          "y": 59
+        },
+        "id": 8,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "cdrfl269uv5kwa"
+            },
+            "rawSQL": "SELECT\r\n    p.name,\r\n    CAST(o.order_date AS TIMESTAMP) AS time,\r\n    COUNT(op.order_products_id) AS sales\r\nFROM\r\n    order_products op\r\nJOIN\r\n    orders o ON op.order_id = o.order_id\r\nJOIN\r\n    products p ON op.product_id = p.product_id\r\nGROUP BY\r\n    p.name, time\r\nORDER BY\r\n    time;",
+            "refId": "A",
+            "schema": "public"
+          }
+        ],
+        "title": "Total products sold over time per product",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "cdrfl269uv5kwa"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Product Volume sold (units)",
+              "axisPlacement": "auto",
+              "fillOpacity": 80,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 22,
+          "x": 0,
+          "y": 72
+        },
+        "id": 6,
+        "options": {
+          "barRadius": 0,
+          "barWidth": 0.97,
+          "fullHighlight": false,
+          "groupWidth": 0.7,
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "orientation": "auto",
+          "showValue": "auto",
+          "stacking": "none",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "xTickLabelRotation": 0,
+          "xTickLabelSpacing": 0
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "cdrfl269uv5kwa"
+            },
+            "rawSQL": "SELECT\n    TO_CHAR(o.date_time, 'HH24:00') AS hour,\n    Count(op.order_products_id) AS volume\nFROM\n    orders o\nJOIN order_products op ON o.order_id = op.order_id\nGROUP BY\n    hour\nORDER BY\n    hour;",
+            "refId": "A",
+            "schema": "public"
+          }
+        ],
+        "title": "Product Volume per Hour",
+        "type": "barchart"
+      },
+      {
+        "datasource": {
+          "type": "grafana-redshift-datasource",
+          "uid": "cdrfl269uv5kwa"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Product Volume sold (units)",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 22,
+          "x": 0,
+          "y": 80
+        },
+        "id": 7,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-redshift-datasource",
+              "uid": "cdrfl269uv5kwa"
+            },
+            "rawSQL": "SELECT \n  p.size,\n  COUNT(op.product_id) AS Sold,\n  CAST(o.order_date AS TIMESTAMP) AS time\nFROM \n  order_products op\njoin\n  products p on op.product_id = p.product_id\njoin\n  orders o on op.order_id = o.order_id\nGroup by\n  p.size, time\nORDER BY\n  time ASC",
+            "refId": "A",
+            "schema": "public"
+          }
+        ],
+        "title": "Product sold per size per day ",
+        "type": "timeseries"
+      }
+    ],
+    "refresh": "",
+    "schemaVersion": 39,
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "2024-07-03T00:00:00.000Z",
+      "to": "2024-07-22T00:00:00.000Z"
+    },
+    "timepicker": {},
+    "timezone": "browser",
+    "title": "Sales Data",
+    "uid": "adrfp95gf4u0wc",
+    "version": 39,
+    "weekStart": ""
+  }

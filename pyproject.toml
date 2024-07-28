@@ -1,0 +1,11 @@
+[project]
+name = "extract_load_transform"
+version = "0.0.1"
+ 
+[tool.pytest.ini_options]
+pythonpath = [
+  #".",
+  #"src",
+  #"src/extract_load_transform",
+  "tests"
+]
